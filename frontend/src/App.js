@@ -82,6 +82,37 @@ const DataRow = ({ label, value, copyLabel }) => (
   </div>
 );
 
+// Copy All Button Component
+const CopyAllButton = ({ text }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      toast.success("Todos los datos copiados al portapapeles");
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      toast.error("Error al copiar");
+    }
+  };
+
+  return (
+    <button
+      data-testid="copy-all-data"
+      onClick={handleCopy}
+      className={`w-full py-4 px-6 rounded-full font-medium transition-all duration-300 flex items-center justify-center gap-3 ${
+        copied 
+          ? 'bg-green-500 text-white' 
+          : 'bg-zinc-900 text-white hover:bg-zinc-800 hover:scale-[1.01]'
+      }`}
+    >
+      {copied ? <Check size={18} /> : <Copy size={18} />}
+      <span>{copied ? 'Datos Copiados' : 'Copiar Todos los Datos'}</span>
+    </button>
+  );
+};
+
 // Bank Card Component
 const BankCard = () => (
   <div data-testid="bank-card" className="bank-card p-6 sm:p-8 md:p-10 max-w-lg w-full mx-auto">
@@ -91,7 +122,10 @@ const BankCard = () => (
       <h3 className="text-2xl sm:text-3xl font-display font-medium text-zinc-900">
         {bankData.holder}
       </h3>
-      <p className="text-base text-[#D4C5A5] font-semibold mt-1 font-body">{bankData.bank}</p>
+      <div className="flex items-center gap-2 mt-2">
+        <BancoChileIcon />
+        <p className="text-base text-[#E31837] font-semibold font-body">{bankData.bank}</p>
+      </div>
     </div>
 
     {/* Divider */}
@@ -115,11 +149,9 @@ const BankCard = () => (
       />
     </div>
 
-    {/* Footer Note */}
+    {/* Copy All Button */}
     <div className="mt-8 pt-6 border-t border-zinc-100">
-      <p className="text-sm text-zinc-500 text-center font-body leading-relaxed">
-        Tu generosidad hace la diferencia
-      </p>
+      <CopyAllButton text={fullAccountText} />
     </div>
   </div>
 );
