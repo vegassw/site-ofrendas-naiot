@@ -10,13 +10,8 @@ const TikTokIcon = () => (
   </svg>
 );
 
-// Banco de Chile Icon
-const BancoChileIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="50" cy="50" r="45" fill="#E31837"/>
-    <path d="M30 35h40v6H36v10h30v6H36v12h34v6H30V35z" fill="white"/>
-  </svg>
-);
+// Banco de Chile Logo URL
+const bancoChileLogo = "https://customer-assets.emergentagent.com/job_tithe-transfer/artifacts/t9hrmdvi_image.png";
 
 // Bank data
 const bankData = {
