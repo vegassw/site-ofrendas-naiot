@@ -117,9 +117,9 @@ const BankCard = () => (
       <h3 className="text-2xl sm:text-3xl font-display font-medium text-zinc-900">
         {bankData.holder}
       </h3>
-      <div className="flex items-center gap-2 mt-2">
-        <BancoChileIcon />
-        <p className="text-base text-[#E31837] font-semibold font-body">{bankData.bank}</p>
+      <div className="flex items-center gap-3 mt-2">
+        <img src={bancoChileLogo} alt="Banco de Chile" className="h-6 w-auto rounded" />
+        <p className="text-base text-[#0A1F5C] font-semibold font-body">{bankData.bank}</p>
       </div>
     </div>
 
