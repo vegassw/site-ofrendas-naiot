@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "@/App.css";
 import { Toaster, toast } from "sonner";
-import { Copy, Check, Instagram, Facebook } from "lucide-react";
+import { Copy, Check, Instagram, Facebook, QrCode } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
+import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 
 // TikTok Icon component (not available in lucide-react)
 const TikTokIcon = () => (
@@ -9,9 +11,6 @@ const TikTokIcon = () => (
     <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
   </svg>
 );
-
-// Banco de Chile Logo URL
-const bancoChileLogo = "https://customer-assets.emergentagent.com/job_tithe-transfer/artifacts/t9hrmdvi_image.png";
 
 // Bank data
 const bankData = {
@@ -184,91 +183,189 @@ const FloatingSocial = () => (
   </div>
 );
 
+// Navigation Button Component
+const NavButton = () => {
+  const location = useLocation();
+  const isQRPage = location.pathname === '/qr';
+
+  return (
+    <Link 
+      to={isQRPage ? '/' : '/qr'}
+      className={`fixed top-5 right-5 z-50 px-5 py-3 rounded-full text-sm font-medium transition-all duration-300 backdrop-blur-md border ${
+        isQRPage 
+          ? 'bg-white/10 border-white/20 text-white hover:bg-white/20' 
+          : 'bg-black/5 border-black/10 text-zinc-900 hover:bg-black/10'
+      }`}
+      data-testid="nav-toggle"
+    >
+      {isQRPage ? 'Ver Datos' : 'Ver QR'}
+    </Link>
+  );
+};
+
+// Home Page Component
+const HomePage = () => (
+  <div data-testid="naiot-landing" className="min-h-screen">
+    {/* Split Layout Container */}
+    <div className="flex flex-col md:flex-row min-h-screen">
+      
+      {/* Hero Section - Dark */}
+      <section 
+        data-testid="hero-section"
+        className="hero-section noise-texture flex-1 flex flex-col items-center justify-center section-padding relative"
+      >
+        {/* Logo */}
+        <div className="logo-container mb-8 md:mb-12 z-10">
+          <img 
+            src={logoTransparent}
+            alt="Naiot Ministerio Cristiano"
+            className="w-48 sm:w-56 md:w-72 lg:w-80 h-auto"
+            data-testid="logo"
+          />
+        </div>
+
+        {/* Hero Text */}
+        <div className="text-center z-10 max-w-lg px-4">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6 animate-fadeInUp tracking-tight">
+            Unidos en <span className="accent-text italic">Propósito</span>
+          </h1>
+          <p className="font-body text-zinc-300 text-sm md:text-base leading-relaxed animate-fadeInUp animation-delay-200 italic">
+            "...alabando a Dios, y teniendo favor con todo el pueblo. Y el Señor añadía cada día a la iglesia los que habían de ser salvos."
+          </p>
+          <p className="font-body text-[#D4C5A5] text-xs md:text-sm mt-3 animate-fadeInUp animation-delay-300 tracking-wide">
+            — Hechos 2:47 RVR1960
+          </p>
+        </div>
+
+        {/* Scroll indicator for mobile */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 md:hidden z-10">
+          <div className="w-6 h-10 border-2 border-zinc-600 rounded-full flex justify-center pt-2">
+            <div className="w-1 h-2 bg-zinc-500 rounded-full animate-bounce"></div>
+          </div>
+        </div>
+      </section>
+
+      {/* Content Section - Light */}
+      <section 
+        data-testid="content-section"
+        className="content-section flex-1 flex flex-col items-center justify-center section-padding"
+      >
+        {/* Section Header */}
+        <div className="text-center mb-8 md:mb-12 max-w-md">
+          <p className="text-xs uppercase tracking-[0.25em] text-zinc-400 mb-3 font-body animate-fadeInUp">
+            Para ofrendas y diezmos
+          </p>
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-zinc-900 animate-fadeInUp animation-delay-100">
+            Datos de Transferencia
+          </h2>
+        </div>
+
+        {/* Bank Card */}
+        <div className="w-full max-w-lg px-4 animate-fadeInUp animation-delay-200">
+          <BankCard />
+        </div>
+
+        {/* Footer */}
+        <div className="mt-10 md:mt-16 text-center">
+          <p className="text-xs text-zinc-400 font-body tracking-wide">
+            © {new Date().getFullYear()} Naiot Ministerio Cristiano
+          </p>
+        </div>
+      </section>
+    </div>
+
+    {/* Floating Social Media Buttons */}
+    <FloatingSocial />
+  </div>
+);
+
+// QR Page Component for projection
+const QRPage = () => {
+  const [qrSize, setQrSize] = useState(350);
+  const baseUrl = window.location.origin;
+
+  useEffect(() => {
+    const updateSize = () => {
+      if (window.innerWidth >= 1024) {
+        setQrSize(450);
+      } else if (window.innerWidth >= 768) {
+        setQrSize(380);
+      } else {
+        setQrSize(280);
+      }
+    };
+    updateSize();
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+
+  return (
+    <div data-testid="qr-page" className="qr-page min-h-screen bg-gradient-to-b from-[#0A0A0A] to-[#1a1a1a] flex flex-col items-center justify-center p-8 text-center">
+      {/* Logo */}
+      <img 
+        src={logoTransparent}
+        alt="Naiot Ministerio Cristiano"
+        className="w-52 md:w-72 lg:w-80 h-auto mb-8 md:mb-12 animate-fadeInUp"
+        data-testid="qr-logo"
+      />
+
+      {/* Title */}
+      <h1 className="font-display text-3xl md:text-5xl lg:text-6xl text-white mb-2 md:mb-4 animate-fadeInUp animation-delay-100">
+        Ofrendas y Diezmos
+      </h1>
+      <p className="text-lg md:text-2xl lg:text-3xl text-[#D4C5A5] mb-8 md:mb-12 animate-fadeInUp animation-delay-200 font-body">
+        Escanea el código QR con tu celular
+      </p>
+
+      {/* QR Container */}
+      <div className="relative bg-white p-6 md:p-8 lg:p-10 rounded-3xl shadow-2xl animate-fadeInUp animation-delay-300">
+        <QRCodeSVG 
+          value={baseUrl}
+          size={qrSize}
+          level="H"
+          includeMargin={false}
+          bgColor="#FFFFFF"
+          fgColor="#0A0A0A"
+        />
+        {/* Logo overlay in center of QR */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-2 md:p-3 rounded-xl shadow-md">
+          <img 
+            src={logoTransparent}
+            alt="Naiot"
+            className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 object-contain"
+          />
+        </div>
+      </div>
+
+      {/* Instruction */}
+      <p className="mt-8 md:mt-12 text-zinc-400 text-base md:text-xl lg:text-2xl animate-fadeInUp animation-delay-400 font-body">
+        Accede a los <span className="text-white font-medium">datos de transferencia</span> desde tu dispositivo
+      </p>
+    </div>
+  );
+};
+
 // Main App Component
 function App() {
   return (
-    <div data-testid="naiot-landing" className="min-h-screen">
-      <Toaster 
-        position="top-center" 
-        richColors 
-        toastOptions={{
-          style: {
-            fontFamily: 'Manrope, sans-serif',
-          },
-        }}
-      />
-      
-      {/* Split Layout Container */}
-      <div className="flex flex-col md:flex-row min-h-screen">
-        
-        {/* Hero Section - Dark */}
-        <section 
-          data-testid="hero-section"
-          className="hero-section noise-texture flex-1 flex flex-col items-center justify-center section-padding relative"
-        >
-          {/* Logo */}
-          <div className="logo-container mb-8 md:mb-12 z-10">
-            <img 
-              src={logoTransparent}
-              alt="Naiot Ministerio Cristiano"
-              className="w-48 sm:w-56 md:w-72 lg:w-80 h-auto"
-              data-testid="logo"
-            />
-          </div>
-
-          {/* Hero Text */}
-          <div className="text-center z-10 max-w-lg px-4">
-            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6 animate-fadeInUp tracking-tight">
-              Unidos en <span className="accent-text italic">Propósito</span>
-            </h1>
-            <p className="font-body text-zinc-300 text-sm md:text-base leading-relaxed animate-fadeInUp animation-delay-200 italic">
-              "...alabando a Dios, y teniendo favor con todo el pueblo. Y el Señor añadía cada día a la iglesia los que habían de ser salvos."
-            </p>
-            <p className="font-body text-[#D4C5A5] text-xs md:text-sm mt-3 animate-fadeInUp animation-delay-300 tracking-wide">
-              — Hechos 2:47 RVR1960
-            </p>
-          </div>
-
-          {/* Scroll indicator for mobile */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 md:hidden z-10">
-            <div className="w-6 h-10 border-2 border-zinc-600 rounded-full flex justify-center pt-2">
-              <div className="w-1 h-2 bg-zinc-500 rounded-full animate-bounce"></div>
-            </div>
-          </div>
-        </section>
-
-        {/* Content Section - Light */}
-        <section 
-          data-testid="content-section"
-          className="content-section flex-1 flex flex-col items-center justify-center section-padding"
-        >
-          {/* Section Header */}
-          <div className="text-center mb-8 md:mb-12 max-w-md">
-            <p className="text-xs uppercase tracking-[0.25em] text-zinc-400 mb-3 font-body animate-fadeInUp">
-              Para ofrendas y diezmos
-            </p>
-            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-zinc-900 animate-fadeInUp animation-delay-100">
-              Datos de Transferencia
-            </h2>
-          </div>
-
-          {/* Bank Card */}
-          <div className="w-full max-w-lg px-4 animate-fadeInUp animation-delay-200">
-            <BankCard />
-          </div>
-
-          {/* Footer */}
-          <div className="mt-10 md:mt-16 text-center">
-            <p className="text-xs text-zinc-400 font-body tracking-wide">
-              © {new Date().getFullYear()} Naiot Ministerio Cristiano
-            </p>
-          </div>
-        </section>
+    <BrowserRouter>
+      <div className="App">
+        <Toaster 
+          position="top-center" 
+          richColors 
+          toastOptions={{
+            style: {
+              fontFamily: 'Manrope, sans-serif',
+            },
+          }}
+        />
+        <NavButton />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/qr" element={<QRPage />} />
+        </Routes>
       </div>
-
-      {/* Floating Social Media Buttons */}
-      <FloatingSocial />
-    </div>
+    </BrowserRouter>
   );
 }
 
