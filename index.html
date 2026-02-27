@@ -897,14 +897,14 @@
     </div>
 
     <script>
-        // Get current URL for QR
-        const currentUrl = window.location.href.split('?')[0].split('#')[0];
+        // URL for QR Code - GitHub Pages
+        const qrUrl = "https://vegassw.github.io/site-ofrendas-naiot/";
         
         // Generate QR Code
         document.addEventListener('DOMContentLoaded', function() {
             const qrSize = window.innerWidth >= 768 ? 350 : 250;
             new QRCode(document.getElementById("qrcode"), {
-                text: currentUrl,
+                text: qrUrl,
                 width: qrSize,
                 height: qrSize,
                 colorDark: "#0A0A0A",
