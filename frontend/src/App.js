@@ -10,14 +10,29 @@ const TikTokIcon = () => (
   </svg>
 );
 
+// Banco de Chile Icon
+const BancoChileIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="45" fill="#E31837"/>
+    <path d="M30 35h40v6H36v10h30v6H36v12h34v6H30V35z" fill="white"/>
+  </svg>
+);
+
 // Bank data
 const bankData = {
   holder: "Carlos Toro",
-  bank: "Banco Santander",
+  bank: "Banco de Chile",
   accountType: "Cuenta Corriente",
-  accountNumber: "04-85123-4",
+  accountNumber: "16-43667-09",
   rut: "12.483.549-6"
 };
+
+// Full account text for copy all
+const fullAccountText = `Carlos Toro
+12.483.549-6
+Banco de Chile
+Cuenta Corriente
+16-43667-09`;
 
 // Social links
 const socialLinks = {
