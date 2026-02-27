@@ -1,52 +1,231 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import { Toaster, toast } from "sonner";
+import { Copy, Check, Instagram, Facebook } from "lucide-react";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+// TikTok Icon component (not available in lucide-react)
+const TikTokIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+  </svg>
+);
 
-const Home = () => {
-  const helloWorldApi = async () => {
+// Bank data
+const bankData = {
+  holder: "Carlos Toro",
+  bank: "Banco Santander",
+  accountType: "Cuenta Corriente",
+  accountNumber: "04-85123-4",
+  rut: "12.483.549-6"
+};
+
+// Social links
+const socialLinks = {
+  instagram: "https://www.instagram.com/naiot_ministeriocristiano?igsh=Z3YwZXZlbXByNXRv",
+  facebook: "https://www.facebook.com/share/1AtxhH3xxZ/?mibextid=wwXIfr",
+  tiktok: "https://www.tiktok.com/@ministerionaiot?_r=1&_t=ZS-94Hc7on39Ue"
+};
+
+// Logo URLs
+const logoTransparent = "https://customer-assets.emergentagent.com/job_d2edaac8-a499-4f65-b268-280f8c89e569/artifacts/wensd3tp_Logo_sin_fondo.jpg.png";
+
+// Copy Button Component
+const CopyButton = ({ text, label }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
     try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      toast.success(`${label} copiado al portapapeles`);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      toast.error("Error al copiar");
     }
   };
 
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
   return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
+    <button
+      data-testid={`copy-${label.toLowerCase().replace(/\s/g, '-')}`}
+      onClick={handleCopy}
+      className={`copy-btn ${copied ? 'copied' : ''}`}
+    >
+      {copied ? <Check size={14} /> : <Copy size={14} />}
+      <span>{copied ? 'Copiado' : 'Copiar'}</span>
+    </button>
   );
 };
 
+// Data Row Component
+const DataRow = ({ label, value, copyLabel }) => (
+  <div className="data-row flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+    <div className="flex-1">
+      <p className="text-xs uppercase tracking-widest text-zinc-400 mb-1 font-body">{label}</p>
+      <p className="text-lg sm:text-xl font-medium text-zinc-900 font-body tracking-wide">{value}</p>
+    </div>
+    {copyLabel && <CopyButton text={value} label={copyLabel} />}
+  </div>
+);
+
+// Bank Card Component
+const BankCard = () => (
+  <div data-testid="bank-card" className="bank-card p-6 sm:p-8 md:p-10 max-w-lg w-full mx-auto">
+    {/* Card Header */}
+    <div className="mb-8">
+      <p className="text-xs uppercase tracking-[0.2em] text-zinc-400 mb-2 font-body">Datos de Transferencia</p>
+      <h3 className="text-2xl sm:text-3xl font-display font-medium text-zinc-900">
+        {bankData.holder}
+      </h3>
+      <p className="text-base text-[#D4C5A5] font-semibold mt-1 font-body">{bankData.bank}</p>
+    </div>
+
+    {/* Divider */}
+    <div className="divider mb-6"></div>
+
+    {/* Data Fields */}
+    <div className="space-y-4">
+      <DataRow 
+        label="Tipo de Cuenta" 
+        value={bankData.accountType} 
+      />
+      <DataRow 
+        label="Número de Cuenta" 
+        value={bankData.accountNumber} 
+        copyLabel="Cuenta"
+      />
+      <DataRow 
+        label="RUT" 
+        value={bankData.rut} 
+        copyLabel="RUT"
+      />
+    </div>
+
+    {/* Footer Note */}
+    <div className="mt-8 pt-6 border-t border-zinc-100">
+      <p className="text-sm text-zinc-500 text-center font-body leading-relaxed">
+        Tu generosidad hace la diferencia
+      </p>
+    </div>
+  </div>
+);
+
+// Floating Social Buttons Component
+const FloatingSocial = () => (
+  <div data-testid="floating-social" className="floating-social">
+    <a 
+      href={socialLinks.instagram}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="social-btn instagram animate-floatIn animation-delay-100"
+      data-testid="social-instagram"
+      aria-label="Instagram"
+    >
+      <Instagram size={22} />
+    </a>
+    <a 
+      href={socialLinks.facebook}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="social-btn facebook animate-floatIn animation-delay-200"
+      data-testid="social-facebook"
+      aria-label="Facebook"
+    >
+      <Facebook size={22} />
+    </a>
+    <a 
+      href={socialLinks.tiktok}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="social-btn tiktok animate-floatIn animation-delay-300"
+      data-testid="social-tiktok"
+      aria-label="TikTok"
+    >
+      <TikTokIcon />
+    </a>
+  </div>
+);
+
+// Main App Component
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+    <div data-testid="naiot-landing" className="min-h-screen">
+      <Toaster 
+        position="top-center" 
+        richColors 
+        toastOptions={{
+          style: {
+            fontFamily: 'Manrope, sans-serif',
+          },
+        }}
+      />
+      
+      {/* Split Layout Container */}
+      <div className="flex flex-col md:flex-row min-h-screen">
+        
+        {/* Hero Section - Dark */}
+        <section 
+          data-testid="hero-section"
+          className="hero-section noise-texture flex-1 flex flex-col items-center justify-center section-padding relative"
+        >
+          {/* Logo */}
+          <div className="logo-container mb-8 md:mb-12 z-10">
+            <img 
+              src={logoTransparent}
+              alt="Naiot Ministerio Cristiano"
+              className="w-48 sm:w-56 md:w-72 lg:w-80 h-auto"
+              data-testid="logo"
+            />
+          </div>
+
+          {/* Hero Text */}
+          <div className="text-center z-10 max-w-md px-4">
+            <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6 animate-fadeInUp tracking-tight">
+              Unidos en <span className="accent-text italic">Propósito</span>
+            </h1>
+            <p className="font-body text-zinc-400 text-base md:text-lg leading-relaxed animate-fadeInUp animation-delay-200">
+              Tu generosidad construye comunidad y transforma vidas.
+            </p>
+          </div>
+
+          {/* Scroll indicator for mobile */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 md:hidden z-10">
+            <div className="w-6 h-10 border-2 border-zinc-600 rounded-full flex justify-center pt-2">
+              <div className="w-1 h-2 bg-zinc-500 rounded-full animate-bounce"></div>
+            </div>
+          </div>
+        </section>
+
+        {/* Content Section - Light */}
+        <section 
+          data-testid="content-section"
+          className="content-section flex-1 flex flex-col items-center justify-center section-padding"
+        >
+          {/* Section Header */}
+          <div className="text-center mb-8 md:mb-12 max-w-md">
+            <p className="text-xs uppercase tracking-[0.25em] text-zinc-400 mb-3 font-body animate-fadeInUp">
+              Para ofrendas y diezmos
+            </p>
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl text-zinc-900 animate-fadeInUp animation-delay-100">
+              Datos de Transferencia
+            </h2>
+          </div>
+
+          {/* Bank Card */}
+          <div className="w-full max-w-lg px-4 animate-fadeInUp animation-delay-200">
+            <BankCard />
+          </div>
+
+          {/* Footer */}
+          <div className="mt-10 md:mt-16 text-center">
+            <p className="text-xs text-zinc-400 font-body tracking-wide">
+              © {new Date().getFullYear()} Naiot Ministerio Cristiano
+            </p>
+          </div>
+        </section>
+      </div>
+
+      {/* Floating Social Media Buttons */}
+      <FloatingSocial />
     </div>
   );
 }

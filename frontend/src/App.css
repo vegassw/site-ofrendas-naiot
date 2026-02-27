@@ -1,34 +1,212 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* Hero Section - Dark */
+.hero-section {
+  background-color: #0A0A0A;
+  min-height: 50vh;
+  position: relative;
+  overflow: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
-}
-
-.App-header {
-    background-color: #0f0f10;
+@media (min-width: 768px) {
+  .hero-section {
     min-height: 100vh;
-    display: flex;
+  }
+}
+
+/* Subtle gradient overlay */
+.hero-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to top, rgba(10,10,10,0.95), transparent);
+  pointer-events: none;
+}
+
+/* Content Section - Light */
+.content-section {
+  background-color: #F9F9F7;
+  min-height: 50vh;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .content-section {
+    min-height: 100vh;
+  }
+}
+
+/* Bank Card Styles */
+.bank-card {
+  background: linear-gradient(145deg, #ffffff 0%, #f8f8f6 100%);
+  border-radius: 24px;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 10px 15px -3px rgba(0, 0, 0, 0.08),
+    0 20px 25px -5px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+.bank-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 8px 10px -2px rgba(0, 0, 0, 0.08),
+    0 20px 25px -5px rgba(0, 0, 0, 0.12),
+    0 30px 40px -10px rgba(0, 0, 0, 0.08);
+}
+
+/* Data Row */
+.data-row {
+  background: #FAFAF8;
+  border-radius: 12px;
+  padding: 16px 20px;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.data-row:hover {
+  background: #F5F5F3;
+  border-color: rgba(212, 197, 165, 0.3);
+}
+
+/* Copy Button */
+.copy-btn {
+  background: #0A0A0A;
+  color: white;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.copy-btn:hover {
+  background: #2A2A2A;
+  transform: scale(1.02);
+}
+
+.copy-btn.copied {
+  background: #22c55e;
+}
+
+/* Floating Social Buttons */
+.floating-social {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 50;
+}
+
+@media (min-width: 768px) {
+  .floating-social {
+    right: 32px;
+    bottom: 32px;
+  }
+}
+
+.social-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.social-btn:hover {
+  transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.social-btn.instagram {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.social-btn.facebook {
+  background: #1877f2;
+}
+
+.social-btn.tiktok {
+  background: #000000;
+  position: relative;
+  overflow: hidden;
+}
+
+.social-btn.tiktok::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, #00f2ea, #ff0050);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.social-btn.tiktok:hover::before {
+  opacity: 1;
+}
+
+.social-btn.tiktok svg {
+  position: relative;
+  z-index: 1;
+}
+
+/* Logo animation */
+.logo-container {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.logo-container img {
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.3));
+  transition: transform 0.4s ease;
+}
+
+.logo-container:hover img {
+  transform: scale(1.02);
+}
+
+/* Text highlight accent */
+.accent-text {
+  color: #D4C5A5;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #E5E5E5, transparent);
+}
+
+/* Mobile split view fix */
+@media (max-width: 767px) {
+  .split-container {
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+  }
 }
 
-.App-link {
-    color: #61dafb;
+/* Responsive padding */
+.section-padding {
+  padding: 3rem 1.5rem;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+@media (min-width: 768px) {
+  .section-padding {
+    padding: 5rem 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding: 6rem 4rem;
+  }
 }
