@@ -1,0 +1,119 @@
+{
+  "project_name": "Naiot Ministry Giving Page",
+  "design_philosophy": {
+    "theme": "Modern Minimalist / Neo-Church",
+    "core_concept": "Transparency & Grace",
+    "visual_style": "Mixed Light/Dark (Split Layout)",
+    "emotional_tone": "Welcoming, Trustworthy, Serene, Modern"
+  },
+  "typography": {
+    "font_family_heading": "Playfair Display, serif",
+    "font_family_body": "Manrope, sans-serif",
+    "scale": {
+      "h1": "text-5xl md:text-7xl font-medium tracking-tight",
+      "h2": "text-3xl md:text-5xl font-normal",
+      "h3": "text-2xl md:text-3xl font-medium",
+      "body": "text-base md:text-lg leading-relaxed",
+      "caption": "text-sm tracking-widest uppercase"
+    },
+    "imports": [
+      "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Manrope:wght@300;400;500;600&display=swap"
+    ]
+  },
+  "colors": {
+    "palette": {
+      "primary": "#0A0A0A",
+      "secondary": "#FFFFFF",
+      "accent": "#D4C5A5",
+      "background_light": "#F9F9F7",
+      "background_dark": "#121212",
+      "text_main": "#1A1A1A",
+      "text_muted": "#666666",
+      "border": "#E5E5E5"
+    },
+    "usage": {
+      "hero_bg": "background_dark",
+      "hero_text": "secondary",
+      "content_bg": "background_light",
+      "card_bg": "secondary",
+      "button_primary": "primary",
+      "button_text": "secondary"
+    }
+  },
+  "layout": {
+    "structure": "Split Layout (Mobile: Stacked)",
+    "grid": "Grid with 12 columns, widely spaced (gap-8)",
+    "container": "max-w-7xl mx-auto px-6 md:px-12",
+    "spacing": "Generous (py-20, py-32)",
+    "z_index": {
+      "floating": 50,
+      "modal": 100
+    }
+  },
+  "components": {
+    "Button": {
+      "style": "rounded-full px-8 py-4 font-medium transition-all duration-300",
+      "variants": {
+        "primary": "bg-black text-white hover:bg-zinc-800 hover:scale-[1.02]",
+        "outline": "border border-zinc-200 hover:border-zinc-900 hover:bg-zinc-50",
+        "ghost": "hover:bg-zinc-100 text-zinc-600 hover:text-black"
+      }
+    },
+    "Card": {
+      "style": "bg-white rounded-2xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-zinc-100 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300"
+    },
+    "Input": {
+      "style": "bg-zinc-50 border-zinc-200 rounded-lg focus:ring-2 focus:ring-black/5 focus:border-black transition-all"
+    }
+  },
+  "assets": {
+    "logo_dark_bg": "https://customer-assets.emergentagent.com/job_d2edaac8-a499-4f65-b268-280f8c89e569/artifacts/sfhoyn2z_Logo.jpg.jpg",
+    "logo_transparent": "https://customer-assets.emergentagent.com/job_d2edaac8-a499-4f65-b268-280f8c89e569/artifacts/wensd3tp_Logo_sin_fondo.jpg.png",
+    "reference_image": "https://customer-assets.emergentagent.com/job_d2edaac8-a499-4f65-b268-280f8c89e569/artifacts/ny0770c9_WhatsApp%20Image%202026-02-27%20at%208.17.07%20PM.jpeg"
+  },
+  "content_data": {
+    "bank_details": {
+      "holder": "Carlos Toro",
+      "bank": "Banco Santander",
+      "account_type": "Cuenta Corriente",
+      "account_number": "04-85123-4",
+      "rut": "12.483.549-6",
+      "email": "ministerionaiot@gmail.com"
+    },
+    "social_links": {
+      "instagram": "https://www.instagram.com/naiot_ministeriocristiano",
+      "facebook": "https://www.facebook.com/share/1AtxhH3xxZ/",
+      "tiktok": "https://www.tiktok.com/@ministerionaiot"
+    },
+    "copy": {
+      "hero_title": "Unidos en Propósito",
+      "hero_subtitle": "Tu generosidad construye comunidad y transforma vidas.",
+      "section_title": "Datos de Transferencia",
+      "section_subtitle": "Para ofrendas y diezmos"
+    }
+  },
+  "motion": {
+    "animation_library": "framer-motion",
+    "guidelines": {
+      "hover": "scale: 1.02, transition: { duration: 0.2 }",
+      "tap": "scale: 0.98",
+      "enter": "opacity: 0, y: 20 -> opacity: 1, y: 0"
+    }
+  },
+  "universal_guidelines": [
+    "Use 'sonner' for toast notifications when copying text.",
+    "Ensure high contrast for text (APCA standards).",
+    "Do NOT use gradients for backgrounds, use solid colors or subtle noise textures.",
+    "Mobile First: Stack columns on mobile, expand to grid on desktop.",
+    "Floating Action Buttons for social media on mobile bottom right.",
+    "Use Lucide-React for icons (Copy, Check, Instagram, Facebook, Link).",
+    "All interactive elements MUST have data-testid attributes."
+  ],
+  "instructions_to_main_agent": [
+    "1. Setup Shadcn UI for basics (Button, Card, Toast).",
+    "2. Implement a 'Split Screen' Hero: Left/Top is Dark with Logo + Message. Right/Bottom is Light with Transfer Card.",
+    "3. Create a 'BankCard' component that resembles a high-end credit card or minimalist passbook.",
+    "4. Add 'Copy to Clipboard' functionality for each data field (Account, RUT).",
+    "5. Implement Floating Social Media buttons that are unobtrusive but accessible."
+  ]
+}
