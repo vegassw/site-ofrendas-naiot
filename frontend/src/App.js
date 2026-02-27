@@ -225,12 +225,15 @@ function App() {
           </div>
 
           {/* Hero Text */}
-          <div className="text-center z-10 max-w-md px-4">
+          <div className="text-center z-10 max-w-lg px-4">
             <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white mb-4 md:mb-6 animate-fadeInUp tracking-tight">
               Unidos en <span className="accent-text italic">Propósito</span>
             </h1>
-            <p className="font-body text-zinc-400 text-base md:text-lg leading-relaxed animate-fadeInUp animation-delay-200">
-              Tu generosidad construye comunidad y transforma vidas.
+            <p className="font-body text-zinc-300 text-sm md:text-base leading-relaxed animate-fadeInUp animation-delay-200 italic">
+              "...alabando a Dios, y teniendo favor con todo el pueblo. Y el Señor añadía cada día a la iglesia los que habían de ser salvos."
+            </p>
+            <p className="font-body text-[#D4C5A5] text-xs md:text-sm mt-3 animate-fadeInUp animation-delay-300 tracking-wide">
+              — Hechos 2:47 RVR1960
             </p>
           </div>
 
