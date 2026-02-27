@@ -282,7 +282,7 @@ const HomePage = () => (
 // QR Page Component for projection
 const QRPage = () => {
   const [qrSize, setQrSize] = useState(350);
-  const baseUrl = window.location.origin;
+  const qrUrl = "https://vegassw.github.io/site-ofrendas-naiot/";
 
   useEffect(() => {
     const updateSize = () => {
@@ -320,7 +320,7 @@ const QRPage = () => {
       {/* QR Container */}
       <div className="relative bg-white p-6 md:p-8 lg:p-10 rounded-3xl shadow-2xl animate-fadeInUp animation-delay-300">
         <QRCodeSVG 
-          value={baseUrl}
+          value={qrUrl}
           size={qrSize}
           level="H"
           includeMargin={false}
