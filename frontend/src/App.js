@@ -328,11 +328,12 @@ const QRPage = () => {
           fgColor="#0A0A0A"
         />
         {/* Logo overlay in center of QR */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-2 md:p-3 rounded-xl shadow-md">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-3 md:p-4 rounded-2xl shadow-lg border border-zinc-100">
           <img 
             src={logoTransparent}
             alt="Naiot"
-            className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 object-contain"
+            className="w-14 h-14 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain"
+            style={{ filter: 'invert(1)' }}
           />
         </div>
       </div>
