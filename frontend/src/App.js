@@ -220,10 +220,10 @@ const HomePage = () => (
           </p>
         </div>
 
-        {/* Scroll indicator for mobile */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 md:hidden z-10">
-          <div className="w-6 h-10 border-2 border-zinc-600 rounded-full flex justify-center pt-2">
-            <div className="w-1 h-2 bg-zinc-500 rounded-full animate-bounce"></div>
+        {/* Scroll Arrow - positioned at bottom */}
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 md:hidden z-10 animate-fadeInUp animation-delay-400">
+          <div className="flex flex-col items-center cursor-pointer" onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}>
+            <ChevronDown size={32} className="text-[#D4C5A5] animate-bounce" />
           </div>
         </div>
       </section>
