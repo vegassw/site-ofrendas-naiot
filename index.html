@@ -189,9 +189,10 @@
         /* Scroll indicator */
         .scroll-indicator {
             position: absolute;
-            bottom: 2rem;
+            bottom: 1.5rem;
             left: 50%;
             transform: translateX(-50%);
+            cursor: pointer;
         }
 
         @media (min-width: 768px) {
@@ -200,21 +201,8 @@
             }
         }
 
-        .scroll-indicator div {
-            width: 24px;
-            height: 40px;
-            border: 2px solid #52525b;
-            border-radius: 20px;
-            display: flex;
-            justify-content: center;
-            padding-top: 8px;
-        }
-
-        .scroll-indicator span {
-            width: 4px;
-            height: 8px;
-            background: #71717a;
-            border-radius: 2px;
+        .scroll-indicator svg {
+            color: #D4C5A5;
             animation: bounce 1.5s infinite;
         }
 
