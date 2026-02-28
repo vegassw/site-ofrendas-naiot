@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import "@/App.css";
 import { Toaster, toast } from "sonner";
-import { Copy, Check, Instagram, Facebook, QrCode } from "lucide-react";
+import { Copy, Check, Instagram, Facebook, ChevronDown } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
-import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // TikTok Icon component (not available in lucide-react)
 const TikTokIcon = () => (
