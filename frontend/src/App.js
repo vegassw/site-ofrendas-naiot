@@ -343,7 +343,6 @@ function App() {
             },
           }}
         />
-        <NavButton />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/qr" element={<QRPage />} />
