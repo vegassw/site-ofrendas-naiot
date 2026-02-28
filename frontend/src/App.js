@@ -183,25 +183,8 @@ const FloatingSocial = () => (
   </div>
 );
 
-// Navigation Button Component
-const NavButton = () => {
-  const location = useLocation();
-  const isQRPage = location.pathname === '/qr';
-
-  return (
-    <Link 
-      to={isQRPage ? '/' : '/qr'}
-      className={`fixed top-5 right-5 z-50 px-5 py-3 rounded-full text-sm font-medium transition-all duration-300 backdrop-blur-md border ${
-        isQRPage 
-          ? 'bg-white/10 border-white/20 text-white hover:bg-white/20' 
-          : 'bg-black/5 border-black/10 text-zinc-900 hover:bg-black/10'
-      }`}
-      data-testid="nav-toggle"
-    >
-      {isQRPage ? 'Ver Datos' : 'Ver QR'}
-    </Link>
-  );
-};
+// Navigation Button Component - REMOVED per user request
+// const NavButton = () => { ... };
 
 // Home Page Component
 const HomePage = () => (
